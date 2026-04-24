@@ -3,7 +3,7 @@
 i3-alternating-layout
 ─────────────────────
 Alternates splith → splitv as windows open/close.
-Direction derived from real window count — nothing to drift.
+Direction derived from real window count - nothing to drift.
 
   1 window  → arm splith  (2nd opens side by side)
   2 windows → arm splitv  (3rd opens below)
@@ -27,8 +27,8 @@ logging.basicConfig(level=logging.INFO, format="[alt-layout] %(message)s", strea
 # ── State ──────────────────────────────────────────────────────────────────────
 
 window_to_ws: dict[int, str] = {}   # win_id → workspace name  (O(1) close lookup)
-ws_counts:    dict[str, int] = {}   # workspace name → count    (O(1) focus lookup)
-_last_armed:  dict[str, str] = {}   # workspace name → last direction (dedup IPC calls)
+ws_counts:    dict[str, int] = {}   # workspace name -> count    (O(1) focus lookup)
+_last_armed:  dict[str, str] = {}   # workspace name -> last direction (dedup IPC calls)
 
 # ── Core ───────────────────────────────────────────────────────────────────────
 
@@ -89,7 +89,7 @@ def on_window_close(i3: i3ipc.Connection, e) -> None:
     ws = window_to_ws.pop(con.id, None)
     if ws is None:
         return
-    count = _resync(i3, ws)  # resync on close — only tree walk in hot path
+    count = _resync(i3, ws)  # resync on close - only tree walk in hot path
     _arm(i3, ws, count)
 
 
@@ -99,13 +99,13 @@ def on_window_focus(i3: i3ipc.Connection, e) -> None:
         return
     ws = window_to_ws.get(con.id)
     if ws:
-        _arm(i3, ws, ws_counts.get(ws, 0))  # O(1) — no tree walk
+        _arm(i3, ws, ws_counts.get(ws, 0))  # O(1) - no tree walk
 
 
 def on_workspace_focus(i3: i3ipc.Connection, e) -> None:
     ws = e.current
     if ws:
-        _arm(i3, ws.name, ws_counts.get(ws.name, 0))  # O(1) — no tree walk
+        _arm(i3, ws.name, ws_counts.get(ws.name, 0))  # O(1) - no tree walk
 
 # ── Startup ────────────────────────────────────────────────────────────────────
 
