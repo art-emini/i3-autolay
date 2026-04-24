@@ -6,6 +6,8 @@
 ![i3wm](https://img.shields.io/badge/i3wm-compatible-brightgreen?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square)
 
+![screenshot](screenshot.png)
+
 ---
 
 ## What it does
@@ -52,7 +54,7 @@ pip install i3ipc --break-system-packages
 
 ```bash
 # Clone
-git clone https://github.com/yourusername/i3-autolay.git
+git clone https://github.com/art-emini/i3-autolay.git
 cd i3-autolay
 
 # Install dependency
